@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import { CountSetterComponent } from "./Exercise1/CountSetterComponent";
+import { HomePage } from "./HomePage";
+import { GenericModal } from "./Exercise2/GenericModal";
+import Books from "./Exercise2/Books";
+import Exercise2 from "./Exercise2/Exercise2";
+import Movies from "./Exercise2/Movies";
+import FilterComponent from "./Exercise3/FilterComponent";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<HomePage/>} /> {/* Redirect to exercise1 */}
+        <Route path="/exercise1" element={<CountSetterComponent />} />
+        <Route path="/exercise2" element={<Exercise2/>} />
+        <Route path="/exercise3" element={<FilterComponent/>} />
+        <Route path="/modal" element={<Books/>} />
+        <Route path="/regularDialog" element={<Movies/>} />
+      </Routes>
+    </>
   );
 }
-
 export default App;
