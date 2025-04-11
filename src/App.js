@@ -7,6 +7,7 @@ import Books from "./Exercise2/Books";
 import Exercise2 from "./Exercise2/Exercise2";
 import Movies from "./Exercise2/Movies";
 import FilterComponent from "./Exercise3/FilterComponent";
+import DialogTest from "./Exercise2/DialogTest";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <Route path="/exercise1" element={<CountSetterComponent />} />
         <Route path="/exercise2" element={<Exercise2/>} />
         <Route path="/exercise3" element={<FilterComponent/>} />
-        <Route path="/modal" element={<Books/>} />
+        <Route path="/modal" element={<DialogTest/>} />
         <Route path="/regularDialog" element={<Movies/>} />
       </Routes>
     </>

@@ -8,12 +8,15 @@ export default function Movies() {
     "Pride and Prejudice",
   ]);
   const [newMovie, setNewMovie] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false); // Track modal state
-
+  const [contentDialog, setContentDialog] = useState({
+    header: '',
+    body:'',
+    footer:''
+  })
   const dialogRef = useRef();
 
   const confirmDelete = (movie) => {
-    dialogRef.current?.open({
+    setContentDialog({
       header: <h2 className="text-xl font-bold">Confirm Deletion</h2>,
       body: (
         <p>
@@ -26,7 +29,6 @@ export default function Movies() {
             className="px-4 py-2 btn btn-light rounded"
             onClick={() => {
                 dialogRef.current?.close();
-                setIsModalOpen(false);
             }}
           >
             Cancel
@@ -36,7 +38,6 @@ export default function Movies() {
             onClick={() => {
               setMovies((prev) => prev.filter((b) => b !== movie));
               dialogRef.current?.close();
-              setIsModalOpen(false);
             }}
           >
             Delete
@@ -44,13 +45,9 @@ export default function Movies() {
         </>
       ),
     });
-    setIsModalOpen(true); // Set modal state to true when open
+    dialogRef.current.showModal();
   };
 
-  const handleOverlayClick = () => {
-    setIsModalOpen(false); // Close the modal when clicking on the overlay
-    dialogRef.current?.close();
-  };
 
   const handleAddMovie = () => {
     if (newMovie.trim()) {
@@ -61,13 +58,6 @@ export default function Movies() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-10 relative">
-      {/* Overlay for preventing interaction with the page */}
-      {isModalOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
-          onClick={handleOverlayClick}
-        />
-      )}
       <div className="bg-white p-6 rounded-xl shadow-lg max-w-md w-full">
         <h1 className="text-2xl font-bold mb-4">Movie List</h1>
         {/* add a new movie */}
@@ -102,7 +92,7 @@ export default function Movies() {
         </ul>
       </div>
       {/* calling the dialog that will remove the movies */}
-      <GenericModal ref={dialogRef} />
+      <GenericModal ref={dialogRef} content={contentDialog} />
     </div>
   );
 }

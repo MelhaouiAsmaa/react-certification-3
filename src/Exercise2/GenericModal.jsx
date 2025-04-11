@@ -1,40 +1,39 @@
-import React, { useState, useImperativeHandle, forwardRef } from "react";
+import React, { useRef } from 'react';
 
-const GenericModal = forwardRef(({ onClose }, ref) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [content, setContent] = useState({ header: null, body: null, footer: null });
+const GenericModal = ({ modal = true, header, body, footer, triggerText = "Open Dialog" }) => {
+  const dialogRef = useRef(null);
 
-  useImperativeHandle(ref, () => ({
-    open: ({ header, body, footer }) => {
-      setContent({ header, body, footer });
-      setIsOpen(true);
-    },
-    close: () => {
-      setIsOpen(false);
-      onClose && onClose();
-    },
-  }));
+  const open = () => {
+    if (modal) {
+      dialogRef.current?.showModal();
+    } else {
+      dialogRef.current?.show();
+    }
+  };
 
-  if (!isOpen) return null;
+  const close = () => {
+    dialogRef.current?.close();
+  };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div className="bg-white rounded-xl shadow-xl p-6 max-w-md w-full relative">
-        <button
-          className="absolute top-2 right-2 text-xl"
-          onClick={() => {
-            setIsOpen(false);
-            onClose && onClose();
-          }}
-        >
-          ✖
-        </button>
-        <div className="mb-4">{content.header}</div>
-        <div className="mb-6">{content.body}</div>
-        <div className="flex justify-end space-x-4">{content.footer}</div>
-      </div>
+    <div className="p-4 border rounded shadow-sm">
+      <button onClick={open} className="btn btn-success text-white px-4 py-2 rounded">
+        {triggerText}
+      </button>
+
+      <dialog
+        ref={dialogRef}
+        style={modal ? {} : { position: 'absolute', top: '250px', left: '100px', zIndex: 10 }}
+        className="rounded-lg p-4 w-80"
+      >
+        <div className="mb-2 font-bold text-lg">{header}</div>
+        <div className="mb-4">{body}</div>
+        <div className="flex justify-end space-x-2">
+          {footer || <button onClick={close} className="px-3 py-1 btn btn-danger rounded">Close</button>}
+        </div>
+      </dialog>
     </div>
   );
-});
+};
 
 export default GenericModal;
