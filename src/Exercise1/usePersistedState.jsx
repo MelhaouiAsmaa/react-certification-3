@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getItem, setItem } from "../utils";
 
 
-export function usePersistedState(key, initialValue = null) {
+export default function usePersistedState(key, initialValue = null) {
     const [value, setValue] = useState(()=> {
         const item = getItem(key) || initialValue;
         return item;

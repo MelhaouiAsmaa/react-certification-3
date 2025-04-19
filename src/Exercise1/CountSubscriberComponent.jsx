@@ -1,4 +1,4 @@
-import { subscribeToState } from "./useLocalStorage"
+import { subscribeToState } from "./usePersistedState"
 
 export function CountSubscriberComponent({subscribedValue}) {
     const count = subscribeToState(subscribedValue);

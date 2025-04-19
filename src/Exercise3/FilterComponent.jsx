@@ -34,7 +34,8 @@ export default function FilterComponent() {
 
   return (
     <div style={{ maxWidth: "300px", margin: "2rem auto" }}>
-      <div className="mb-5">
+      <div className="mb-5"> 
+        {/* need more distance between the inputs  */}
         <FilterDropdown
           options={data}
           labelKey="name"

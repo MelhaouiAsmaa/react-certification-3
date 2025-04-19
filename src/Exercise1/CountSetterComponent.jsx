@@ -1,6 +1,5 @@
-import { useEffect } from "react";
 import { CountSubscriberComponent } from "./CountSubscriberComponent";
-import { usePersistedState } from "./useLocalStorage";
+import  usePersistedState  from "./usePersistedState";
 
 export function CountSetterComponent() {
   const [count, setCount] = usePersistedState("count", 0);
