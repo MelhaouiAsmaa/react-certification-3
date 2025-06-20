@@ -3,6 +3,7 @@ import usePersistedState from "./usePersistedState";
 
 export function CountSetterComponent() {
   const [count, setCount] = usePersistedState("count", 0);
+console.log(count);
 
   function handleIncrement() {
     setCount((count) => count + 1);
