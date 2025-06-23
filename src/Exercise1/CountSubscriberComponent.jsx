@@ -1,19 +1,4 @@
-// // CountSubscriberComponent.js
-// import { useCount } from "./CountContext";
-
 import { useCount } from "./CountContext";
-
-// export function CountSubscriberComponent({ className }) {
-//   const { count } = useCount();
-
-//   return (
-//     <div className={className}>
-//       <h2>Component 2</h2>
-//       <h3>{count}</h3>
-//     </div>
-//   );
-// }
-
 
 export function CountSubscriberComponent({ className }) {
   const count = useCount();
