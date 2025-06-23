@@ -1,8 +1,33 @@
+// // CountSetterComponent.js
+// import { useCount } from "./CountContext";
+// import { CountSubscriberComponent } from "./CountSubscriberComponent";
+
+// export function CountSetterComponent() {
+//   const { count, setCount } = useCount();
+
+//   function handleIncrement() {
+//     setCount((c) => c + 1);
+//   }
+
+//   return (
+//     <div className="row">
+//       <div className="col-6 text-center bg-primary">
+//         <h2>Component 1</h2>
+//         <button className="btn btn-primary" onClick={handleIncrement}>
+//           Increment
+//         </button>
+//         <p>{count}</p>
+//       </div>
+//       <CountSubscriberComponent className="col-6 text-center" />
+//     </div>
+//   );
+// }
+
 import { CountSubscriberComponent } from "./CountSubscriberComponent";
-import usePersistedState from "./usePersistedState";
+import { useCount } from "./CountContext";
 
 export function CountSetterComponent() {
-  const [count, setCount] = usePersistedState("count", 0);
+  const [count, setCount] = useCount();
 console.log(count);
 
   function handleIncrement() {
@@ -24,7 +49,7 @@ console.log(count);
         </div>
   
         {/* Right side: CountSubscriberComponent */}
-        <CountSubscriberComponent className="col-6 text-center" subscribedValue="count" />
+        <CountSubscriberComponent className="col-6 text-center"/>
     </div>
   );
   
