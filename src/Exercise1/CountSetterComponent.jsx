@@ -1,46 +1,39 @@
-import { CountSubscriberComponent } from "./CountSubscriberComponent";
-import { NameSetterComponent } from "./NameSetterComponent";
-import { GenericProvider, useValue } from "./GenericContext";
+import {  useValue } from "./GenericContext";
+import { SubscriberComponent } from "./SubscriberComponent";
 
 export function CountSetterComponent() {
   const [value, setValue] = useValue();
-
 
   function handleIncrement() {
     setValue((value) => value + 1);
   }
 
-  function handleDecrement(){
+  function handleDecrement() {
     setValue((value) => value - 1);
   }
 
   return (
-    <div className="row">
-        {/* Left side: Title + Button */}
-        <div className="col-6 text-center bg-primary">
-          <h2 className="text-2xl font-bold mb-4">Component 1</h2>
-          <button
-            className="btn btn-primary text-white font-bold py-2 px-6 rounded"
-            onClick={handleIncrement}
-          >
-            Increment
-          </button>
-                    <button
-            className="btn btn-primary text-white font-bold py-2 px-6 rounded"
-            onClick={handleDecrement}
-          >
-            Decrement
-          </button>
-          <p>{value}</p>
+    <div className="container mt-5">
+      <div className="row g-4">
+        {/* Setter on the left */}
+        <div className="col-md-6">
+          <div className="card shadow">
+            <div className="card-body">
+              <h5 className="card-title">Count Setter</h5>
+              <p className="card-text">Current Count: <strong>{value}</strong></p>
+              <div className="d-flex gap-2">
+                <button className="btn btn-success" onClick={handleIncrement}>Increment</button>
+                <button className="btn btn-danger" onClick={handleDecrement}>Decrement</button>
+              </div>
+            </div>
+          </div>
         </div>
-  
-        {/* Right side: CountSubscriberComponent */}
-        <CountSubscriberComponent className="col-6 text-center"/>
-        <GenericProvider keyName='name' initialValue="">
-                  <NameSetterComponent/>
-                  <CountSubscriberComponent/>
-        </GenericProvider>
+
+        {/* Subscriber on the right */}
+        <div className="col-md-6">
+          <SubscriberComponent title="Count subscriber"/>
+        </div>
+      </div>
     </div>
   );
-  
 }
