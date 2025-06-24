@@ -1,16 +1,16 @@
-import { useName } from "./NameContext";
+import { useValue } from "./GenericContext";
 
 export function NameSetterComponent(){
-    const {name, setName} = useName();
+    const [value, setValue] = useValue();
 
     function handleChangeName(e){
-       return setName(e.target.value);
+       return setValue(e.target.value);
     }
 
     return(
         <>
-        <input onChange={(e)=> handleChangeName(e)} value={name}/>
-        <p>{name}</p>
+        <input onChange={(e)=> handleChangeName(e)} value={value}/>
+        <p>{value}</p>
         </>
     )
 }

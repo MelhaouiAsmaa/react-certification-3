@@ -6,7 +6,7 @@ import Exercise2 from "./Exercise2/Exercise2";
 import Movies from "./Exercise2/Movies";
 import FilterComponent from "./Exercise3/FilterComponent";
 import DialogTest from "./Exercise2/DialogTest";
-import { CountProvider } from "./Exercise1/CountContext.jsx";
+import { GenericProvider } from "./Exercise1/GenericContext.jsx";
 
 function App() {
   return (
@@ -14,9 +14,9 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage/>} /> {/* Redirect to exercise1 */}
         <Route path="/exercise1" element={
-          <CountProvider>
+          <GenericProvider keyName='count' initialValue={0}>
             <CountSetterComponent />
-          </CountProvider>
+          </GenericProvider>
           } />
         <Route path="/exercise2" element={<Exercise2/>} />
         <Route path="/exercise3" element={<FilterComponent/>} />

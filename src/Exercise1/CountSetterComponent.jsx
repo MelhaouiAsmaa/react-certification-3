@@ -1,14 +1,17 @@
 import { CountSubscriberComponent } from "./CountSubscriberComponent";
-import { useCount } from "./CountContext";
 import { NameSetterComponent } from "./NameSetterComponent";
-import { NameProvider } from "./NameContext";
+import { GenericProvider, useValue } from "./GenericContext";
 
 export function CountSetterComponent() {
-  const [count, setCount] = useCount();
+  const [value, setValue] = useValue();
 
 
   function handleIncrement() {
-    setCount((count) => count + 1);
+    setValue((value) => value + 1);
+  }
+
+  function handleDecrement(){
+    setValue((value) => value - 1);
   }
 
   return (
@@ -22,14 +25,21 @@ export function CountSetterComponent() {
           >
             Increment
           </button>
-          <p>{count}</p>
+                    <button
+            className="btn btn-primary text-white font-bold py-2 px-6 rounded"
+            onClick={handleDecrement}
+          >
+            Decrement
+          </button>
+          <p>{value}</p>
         </div>
   
         {/* Right side: CountSubscriberComponent */}
         <CountSubscriberComponent className="col-6 text-center"/>
-        <NameProvider>
+        <GenericProvider keyName='name' initialValue="">
                   <NameSetterComponent/>
-        </NameProvider>
+                  <CountSubscriberComponent/>
+        </GenericProvider>
     </div>
   );
   
