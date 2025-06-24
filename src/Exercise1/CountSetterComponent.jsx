@@ -1,9 +1,11 @@
 import { CountSubscriberComponent } from "./CountSubscriberComponent";
 import { useCount } from "./CountContext";
+import { NameSetterComponent } from "./NameSetterComponent";
+import { NameProvider } from "./NameContext";
 
 export function CountSetterComponent() {
   const [count, setCount] = useCount();
-console.log(count);
+
 
   function handleIncrement() {
     setCount((count) => count + 1);
@@ -25,6 +27,9 @@ console.log(count);
   
         {/* Right side: CountSubscriberComponent */}
         <CountSubscriberComponent className="col-6 text-center"/>
+        <NameProvider>
+                  <NameSetterComponent/>
+        </NameProvider>
     </div>
   );
   
