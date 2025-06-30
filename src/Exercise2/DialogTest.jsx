@@ -1,8 +1,11 @@
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import GenericModal from "./GenericModal";
 
 export default function DialogTest() {
   const [count, setCount] = useState(0);
+
+  const modalRef = useRef(null);
+  const nonModalRef = useRef(null);
 
   return (
     <div className="space-y-8 p-6">
@@ -20,16 +23,31 @@ export default function DialogTest() {
         </p>
       </div>
 
-      {/* Modal Dialog */}
+      <div className="space-x-4">
+        <button
+          onClick={() => modalRef.current?.open()}
+          className="btn btn-outline"
+        >
+          Open Modal from Outside
+        </button>
+        <button
+          onClick={() => nonModalRef.current?.open()}
+          className="btn btn-outline"
+        >
+          Open Non-Modal from Outside
+        </button>
+      </div>
+
       <GenericModal
+        ref={modalRef}
         modal={true}
         triggerText="Open Modal Dialog"
         header="Modal Dialog"
         body={<p>This dialog blocks interaction with the background.</p>}
       />
 
-      {/* Non-Modal Dialog */}
       <GenericModal
+        ref={nonModalRef}
         modal={false}
         triggerText="Open Non-Modal Dialog"
         header="Non-Modal Dialog"
