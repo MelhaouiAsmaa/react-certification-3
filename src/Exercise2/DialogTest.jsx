@@ -39,16 +39,16 @@ export default function DialogTest() {
           Use this to test background interaction.
         </p>
       </div>
-      <div className="space-x-4">
+      <div className="p-4 border rounded shadow-sm">
         <button
           onClick={() => modalRef.current?.open()}
-          className="btn btn-outline"
+          className="btn btn-success"
         >
           Open Modal from Outside
         </button>
         <button
           onClick={() => nonModalRef.current?.open()}
-          className="btn btn-outline"
+          className="btn btn-danger ms-2"
         >
           Open Non-Modal from Outside
         </button>

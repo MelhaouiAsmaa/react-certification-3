@@ -18,7 +18,7 @@ const GenericModal = forwardRef(
     }));
 
     return (
-      <div className="p-4 border rounded shadow-sm">
+      <>
         <dialog
           ref={dialogRef}
           style={
@@ -43,7 +43,7 @@ const GenericModal = forwardRef(
             )}
           </div>
         </dialog>
-      </div>
+      </>
     );
   }
 );
