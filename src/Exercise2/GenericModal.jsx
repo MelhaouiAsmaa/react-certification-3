@@ -1,7 +1,7 @@
 import React, { useRef, forwardRef, useImperativeHandle } from "react";
 
 const GenericModal = forwardRef(
-  ({ modal = true, header, body, footer, triggerText = "Open Dialog" }, ref) => {
+  ({ modal = true, header, body, footer}, ref) => {
     const dialogRef = useRef(null);
 
     useImperativeHandle(ref, () => ({
@@ -19,10 +19,6 @@ const GenericModal = forwardRef(
 
     return (
       <div className="p-4 border rounded shadow-sm">
-        <button onClick={() => ref?.current?.open()} className="btn btn-success text-white px-4 py-2 rounded">
-          {triggerText}
-        </button>
-
         <dialog
           ref={dialogRef}
           style={

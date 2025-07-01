@@ -7,10 +7,27 @@ export default function DialogTest() {
   const modalRef = useRef(null);
   const nonModalRef = useRef(null);
 
+    const modalFooter = (
+      <button
+        onClick={() => modalRef?.current?.close()}
+        className="px-3 py-1 btn btn-danger rounded"
+      >
+        Close
+      </button>
+      );
+      
+    const nonModalFooter = (
+      <button
+        onClick={() => nonModalRef?.current?.close()}
+        className="px-3 py-1 btn btn-warning rounded"
+      >
+        Close
+      </button>
+      );
+
   return (
     <div className="space-y-8 p-6">
       <h1 className="text-2xl font-bold">Reusable Dialog Demo</h1>
-
       <div className="mb-4">
         <button
           onClick={() => setCount((c) => c + 1)}
@@ -22,7 +39,6 @@ export default function DialogTest() {
           Use this to test background interaction.
         </p>
       </div>
-
       <div className="space-x-4">
         <button
           onClick={() => modalRef.current?.open()}
@@ -37,21 +53,19 @@ export default function DialogTest() {
           Open Non-Modal from Outside
         </button>
       </div>
-
       <GenericModal
         ref={modalRef}
         modal={true}
-        triggerText="Open Modal Dialog"
         header="Modal Dialog"
         body={<p>This dialog blocks interaction with the background.</p>}
+        footer={modalFooter}
       />
-
       <GenericModal
         ref={nonModalRef}
         modal={false}
-        triggerText="Open Non-Modal Dialog"
         header="Non-Modal Dialog"
         body={<p>This dialog allows background interaction.</p>}
+        footer={nonModalFooter}
       />
     </div>
   );
