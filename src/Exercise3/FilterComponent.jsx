@@ -17,48 +17,56 @@ export default function FilterComponent() {
         );
         const data = await response.json();
         setData(data);
-        console.log("data: ", data);
+        //console.log("data: ", data);
       } catch (error) {
         setError(error.message);
         console.error("Error fetching cities:", error);
-      }
-      finally{
+      } finally {
         setLoading(false);
       }
     }
     fetchData();
   }, []);
 
-   if(loading) return(<p>...Loading</p>)
-   else if(error) return (<p>Error loading data: {error}</p>)
+  if (loading) return <p>...Loading</p>;
+  else if (error) return <p>Error loading data: {error}</p>;
 
   return (
-    <div style={{ maxWidth: "300px", margin: "2rem auto" }}>
-      <div className="mb-5"> 
-        {/* need more distance between the inputs  */}
-        <FilterDropdown
-          options={data}
-          labelKey="name"
-          placeholder="Type a user..."
-          valueChange={(user) => setSelectedUser(user)}
-        />
-        {selectedUser && (
-          <p style={{ marginTop: "1rem" }}>
-            City: <strong>{selectedUser.name}</strong>
-          </p>
-        )}
+    <div className="container">
+      <h2 className="mb-4 text-center">Auto-filter dropdown</h2>
+
+      <div className="row">
+        <div className="col-md-6">
+          <div className="p-3 bg-primary">
+            <FilterDropdown
+              options={data}
+              labelKey="name"
+              placeholder="Type a user..."
+              valueChange={(user) => setSelectedUser(user)}
+            />
+            {selectedUser && (
+              <p style={{ marginTop: "1rem" }}>
+                City: <strong>{selectedUser.name}</strong>
+              </p>
+            )}
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="p-3 bg-success">
+            <FilterDropdown
+              options={data?.map((user) => user?.company)}
+              labelKey="name"
+              placeholder="Type a company..."
+              valueChange={(company) => setSelectedCompany(company)}
+            />
+            {selectedCompany && (
+              <p style={{ marginTop: "1rem" }}>
+                Company: <strong>{selectedCompany?.name}</strong>
+              </p>
+            )}
+          </div>
+        </div>
       </div>
-      <FilterDropdown
-        options={data?.map((user) => user?.company)}
-        labelKey="name"
-        placeholder="Type a company..."
-        valueChange={(company) => setSelectedCompany(company)}
-      />
-      {selectedCompany && (
-        <p style={{ marginTop: "1rem" }}>
-          Company: <strong>{selectedCompany?.name}</strong>
-        </p>
-      )}
     </div>
   );
 }

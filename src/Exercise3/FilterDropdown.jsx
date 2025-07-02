@@ -1,9 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function FilterDropdown({ options = [], labelKey = 'name', placeholder = 'Search...', valueChange }) {
     const [search, setSearch] = useState('');
     const [filteredOptions, setFilteredOptions] = useState(options);
     const [showDropdown, setShowDropdown] = useState(false);
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+    function handleClickOutside(event) {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target))
+            setShowDropdown(false);
+    }
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+    }, []);
 
     useEffect(() => {
         // Update filteredOptions when props.options or search changes
@@ -29,6 +39,7 @@ export default function FilterDropdown({ options = [], labelKey = 'name', placeh
     return (
         <div style={{ position: 'relative', width: '100%' }}>
             <input
+                ref={dropdownRef}
                 type="text"
                 value={search}
                 onChange={handleInputChange}
@@ -69,7 +80,7 @@ export default function FilterDropdown({ options = [], labelKey = 'name', placeh
                         return (
                             <li
                                 key={index}
-                                onClick={() => handleSelect(option)}
+                                onMouseDown={() => handleSelect(option)}
                                 style={{
                                     padding: '8px',
                                     cursor: 'pointer',
