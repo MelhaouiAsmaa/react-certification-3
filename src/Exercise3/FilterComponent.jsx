@@ -17,7 +17,7 @@ export default function FilterComponent() {
         );
         const data = await response.json();
         setData(data);
-        //console.log("data: ", data);
+        console.log("data: ", data);
       } catch (error) {
         setError(error.message);
         console.error("Error fetching cities:", error);
@@ -38,32 +38,32 @@ export default function FilterComponent() {
       <div className="row">
         <div className="col-md-6">
           <div className="p-3 bg-primary">
+            {selectedUser && (
+              <p style={{ marginTop: "1rem" }}>
+                City: <strong>{selectedUser.name}</strong>
+              </p>
+            )}
             <FilterDropdown
               options={data}
               labelKey="name"
               placeholder="Type a user..."
               valueChange={(user) => setSelectedUser(user)}
             />
-            {selectedUser && (
-              <p style={{ marginTop: "1rem" }}>
-                City: <strong>{selectedUser.name}</strong>
-              </p>
-            )}
           </div>
         </div>
         <div className="col-md-6">
           <div className="p-3 bg-success">
+            {selectedCompany && (
+              <p style={{ marginTop: "1rem" }}>
+                Company: <strong>{selectedCompany?.name}</strong>
+              </p>
+            )}
             <FilterDropdown
               options={data?.map((user) => user?.company)}
               labelKey="name"
               placeholder="Type a company..."
               valueChange={(company) => setSelectedCompany(company)}
             />
-            {selectedCompany && (
-              <p style={{ marginTop: "1rem" }}>
-                Company: <strong>{selectedCompany?.name}</strong>
-              </p>
-            )}
           </div>
         </div>
       </div>

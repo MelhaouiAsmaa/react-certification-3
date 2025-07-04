@@ -16,12 +16,7 @@ export default function FilterDropdown({ options = [], labelKey = 'name', placeh
     }, []);
 
     useEffect(() => {
-        // Update filteredOptions when props.options or search changes
-        setFilteredOptions(
-            options.filter(opt =>
-                opt[labelKey]?.toLowerCase().includes(search?.toLowerCase())
-            )
-        );
+        setFilteredOptions(options.filter(opt => opt[labelKey]?.toLowerCase().includes(search?.toLowerCase())));
     }, [options, search, labelKey]);
     
     function handleInputChange(e) {
@@ -31,6 +26,7 @@ export default function FilterDropdown({ options = [], labelKey = 'name', placeh
     }
 
     function handleSelect(option) {
+        console.log(option,'[',labelKey,'] : ', option[labelKey]);
         setSearch(option[labelKey]);
         setShowDropdown(false);
         valueChange(option);  // Call the callback to return the full selected object
@@ -80,7 +76,7 @@ export default function FilterDropdown({ options = [], labelKey = 'name', placeh
                         return (
                             <li
                                 key={index}
-                                onMouseDown={() => handleSelect(option)}
+                                onClick={() => handleSelect(option)}
                                 style={{
                                     padding: '8px',
                                     cursor: 'pointer',
