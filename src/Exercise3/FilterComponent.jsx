@@ -17,7 +17,6 @@ export default function FilterComponent() {
         );
         const data = await response.json();
         setData(data);
-        console.log("data: ", data);
       } catch (error) {
         setError(error.message);
         console.error("Error fetching cities:", error);

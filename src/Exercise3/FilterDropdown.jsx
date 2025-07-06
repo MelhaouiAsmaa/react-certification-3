@@ -1,11 +1,45 @@
 import { useState, useEffect, useRef } from 'react';
 
+export function highlightMatches(word, match) {
+  const indexes = [];
+  const lowerWord = word.toLowerCase();
+  const lowerMatch = match.toLowerCase();
+  const matchLength = lowerMatch.length;
+
+  let index = lowerWord.indexOf(lowerMatch);
+
+  if (matchLength === 0) return [word];
+
+  // Collect all match indexes
+  while (index !== -1) {
+    indexes.push(index);
+    index = lowerWord.indexOf(lowerMatch, index + 1);
+  }
+
+  const parts = [];
+  let current = 0;
+
+  indexes.forEach((matchIndex, i) => {
+    if (matchIndex > current)                                                                                                                                         
+      parts.push(word.slice(current, matchIndex));
+
+    parts.push(<strong key={i}>{word.slice(matchIndex, matchIndex + matchLength)}</strong>);
+
+    current = matchIndex + matchLength;
+  });
+
+  if (current < word.length)
+    parts.push(word.slice(current));
+
+  return parts;
+}
+
 export default function FilterDropdown({ options = [], labelKey = 'name', placeholder = 'Search...', valueChange }) {
     const [search, setSearch] = useState('');
     const [filteredOptions, setFilteredOptions] = useState(options);
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef(null);
-
+    //closing dropdown when clicking outside
     useEffect(() => {
     function handleClickOutside(event) {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target))
@@ -14,7 +48,7 @@ export default function FilterDropdown({ options = [], labelKey = 'name', placeh
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
     }, []);
-
+    //filterin options based on input search
     useEffect(() => {
         setFilteredOptions(options.filter(opt => opt[labelKey]?.toLowerCase().includes(search?.toLowerCase())));
     }, [options, search, labelKey]);
@@ -26,80 +60,31 @@ export default function FilterDropdown({ options = [], labelKey = 'name', placeh
     }
 
     function handleSelect(option) {
-        console.log(option,'[',labelKey,'] : ', option[labelKey]);
         setSearch(option[labelKey]);
         setShowDropdown(false);
         valueChange(option);  // Call the callback to return the full selected object
     }
 
     return (
-        <div style={{ position: 'relative', width: '100%' }}>
-            <input
-                ref={dropdownRef}
-                type="text"
-                value={search}
-                onChange={handleInputChange}
-                onFocus={() => setShowDropdown(true)}
-                placeholder={placeholder}
-                style={{
-                    width: '100%',
-                    padding: '8px',
-                    fontSize: '16px',
-                    boxSizing: 'border-box'
-                }}
-            />
-
+            <div ref={dropdownRef} className="position-relative w-100">
+            <input type="text" value={search} onChange={handleInputChange} onFocus={()=>setShowDropdown(true)} placeholder={placeholder} className="form-control w-100" style={{ fontSize: '16px' }}/>
+            
             {showDropdown && filteredOptions.length > 0 && (
-                <ul style={{
-                    listStyle: 'none',
-                    margin: 0,
-                    padding: 0,
-                    border: '1px solid #ccc',
-                    borderTop: 'none',
-                    position: 'absolute',
-                    width: '100%',
-                    maxHeight: '150px',
-                    overflowY: 'auto',
-                    background: '#fff',
-                    zIndex: 1
-                }}>
-                    {filteredOptions.map((option, index) => {
-                        const matchIndex = option[labelKey].toLowerCase().indexOf(search.toLowerCase());
-                        const matchLength = search.length;
-
-                        if (matchIndex === -1) return null;
-
-                        const before = option[labelKey].slice(0, matchIndex);
-                        const match = option[labelKey].slice(matchIndex, matchIndex + matchLength);
-                        const after = option[labelKey].slice(matchIndex + matchLength);
-
+                <ul className="list-unstyled position-absolute w-100 bg-white border border-top-0 overflow-auto" style={{ maxHeight: '150px', zIndex: 1 }}>
+                     
+                     {filteredOptions.map((option, index) => {
                         return (
-                            <li
-                                key={index}
-                                onClick={() => handleSelect(option)}
-                                style={{
-                                    padding: '8px',
-                                    cursor: 'pointer',
-                                    borderBottom: '1px solid #eee'
-                                }}
-                            >
-                                {before}<strong>{match}</strong>{after}
+                            <li key={index} onClick={() => handleSelect(option)} style={{ padding: '8px', cursor: 'pointer', borderBottom: '1px solid #eee' }}>
+                            {highlightMatches(option[labelKey], search) /*highlight every occurrence of the matching part */}
                             </li>
                         );
                     })}
+
                 </ul>
             )}
 
             {filteredOptions.length === 0 && search && (
-                <div style={{
-                    position: 'absolute',
-                    background: '#fff',
-                    border: '1px solid #ccc',
-                    borderTop: 'none',
-                    width: '100%',
-                    padding: '8px',
-                    zIndex: 1
-                }}>
+                <div className="position-absolute w-100 bg-white border border-top-0 p-2" style={{ zIndex: 1 }}>
                     No results found
                 </div>
             )}
