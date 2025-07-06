@@ -19,7 +19,7 @@ function App() {
               <GenericProvider keyName="count" initialValue={0}>
                 <CountSetterComponent />
               </GenericProvider>
-              <GenericProvider keyName="name" initialValue="">
+              <GenericProvider keyName="name" initialValue="Waiting for name..">
                 <NameSetterComponent />
               </GenericProvider>
             </>

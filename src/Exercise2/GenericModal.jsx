@@ -1,7 +1,6 @@
 import React, { useRef, forwardRef, useImperativeHandle } from "react";
 
-const GenericModal = forwardRef(
-  ({ modal = true, header, body, footer}, ref) => {
+const GenericModal = forwardRef(({ modal = true, header, body, footer}, ref) => {
     const dialogRef = useRef(null);
 
     useImperativeHandle(ref, () => ({
@@ -21,16 +20,7 @@ const GenericModal = forwardRef(
       <>
         <dialog
           ref={dialogRef}
-          style={
-            modal
-              ? {}
-              : {
-                  position: "absolute",
-                  top: "250px",
-                  left: "100px",
-                  zIndex: 10,
-                }
-          }
+          style={modal ? {} : {position: "absolute", top: "250px", left: "100px", zIndex: 10}} 
           className="rounded-lg p-4 w-80"
         >
           <div className="mb-2 font-bold text-lg">{header}</div>
