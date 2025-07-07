@@ -12,9 +12,7 @@ export default function FilterComponent() {
     async function fetchData() {
       setLoading(true);
       try {
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/users"
-        );
+        const response = await fetch("https://jsonplaceholder.typicode.com/users");
         const data = await response.json();
         setData(data);
       } catch (error) {
@@ -31,15 +29,15 @@ export default function FilterComponent() {
   else if (error) return <p>Error loading data: {error}</p>;
 
   return (
-    <div className="container">
+    <div className="container p-5">
       <h2 className="mb-4 text-center">Auto-filter dropdown</h2>
 
       <div className="row">
         <div className="col-md-6">
           <div className="p-3 bg-primary">
             {selectedUser && (
-              <p style={{ marginTop: "1rem" }}>
-                City: <strong>{selectedUser.name}</strong>
+              <p>
+                City: <strong>{selectedUser?.name}</strong>
               </p>
             )}
             <FilterDropdown
@@ -53,7 +51,7 @@ export default function FilterComponent() {
         <div className="col-md-6">
           <div className="p-3 bg-success">
             {selectedCompany && (
-              <p style={{ marginTop: "1rem" }}>
+              <p>
                 Company: <strong>{selectedCompany?.name}</strong>
               </p>
             )}

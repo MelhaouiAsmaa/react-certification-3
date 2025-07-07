@@ -13,6 +13,7 @@ export function GenericProvider({keyName, initialValue, children}){
         setItem(keyName, value);
     }, [keyName, value]);
 
+    //Changing the localStorage value outside of the scope of the React application
     useEffect(() => {
       const handler = (e) => {
         if (e.key === keyName) {
