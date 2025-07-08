@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
+//helper function
 export function highlightMatches(word, match) {
   const indexes = [];
   const lowerWord = word.toLowerCase();
@@ -9,25 +10,21 @@ export function highlightMatches(word, match) {
   let index = lowerWord.indexOf(lowerMatch);
 
   if (matchLength === 0) return [word];
-
   // Collect all match indexes
   while (index !== -1) {
     indexes.push(index);
     index = lowerWord.indexOf(lowerMatch, index + 1);
   }
-
   const parts = [];
   let current = 0;
 
   indexes.forEach((matchIndex, i) => {
     if (matchIndex > current) parts.push(word.slice(current, matchIndex));
-
     parts.push(
       <strong key={i}>
         {word.slice(matchIndex, matchIndex + matchLength)}
       </strong>
     );
-
     current = matchIndex + matchLength;
   });
 
